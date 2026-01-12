@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LM Express</title>
+
+    <!-- Open Graph -->
+    <meta property="og:url" content="https://jimboy3100.github.io">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="The Legend Mod Project">
+    <meta
+      property="og:description"
+      content="The most well developed script for agar.io"
+    >
+    <meta
+      property="og:image"
+      content="https://jimboy3100.github.io/banners/CropedImage128.gif"
+    >
+    <link
+      rel="icon"
+      href="https://jimboy3100.github.io/banners/icon32croped.ico.gif"
+    >
+
+    <!-- Fonts & Icons -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap"
+    >
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    >
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css"
+    >
+
+    <!-- Vendor CSS -->
+    <link
+      rel="stylesheet"
+      href="https://jimboy3100.github.io/bootstrap-colorpicker.min.css"
+    >
+    <link rel="stylesheet" href="https://jimboy3100.github.io/toastr.min.css">
+    <link
+      rel="stylesheet"
+      href="https://jimboy3100.github.io/switchery.min.css"
+    >
+    <link rel="stylesheet" href="https://jimboy3100.github.io/rangeslider.css">
+    <link
+      rel="stylesheet"
+      href="https://jimboy3100.github.io/perfect-scrollbar.min.css"
+    >
+    <link
+      rel="stylesheet"
+      href="https://jimboy3100.github.io/context-menu.min.css"
+    >
+
+    <!-- App CSS -->
+    <link
+      rel="stylesheet"
+      href="https://jimboy3100.github.io/LMexpress/master.css"
+    >
+    <link
+      rel="stylesheet"
+      href="https://jimboy3100.github.io/css/ogario.v3.css"
+    >
+  </head>
+
+  <body>
+    <div id="fb-root"></div>
+
+    <!-- Captcha Overlays -->
+    <div id="captchaWindow" class="captcha-overlay" hidden>
+      <div id="verifyUser" class="captcha-content"></div>
+    </div>
+    <div id="captchaWindowV3" hidden></div>
+
+    <!-- Main Overlays -->
+    <div id="overlays">
+      <div
+        id="helloContainer"
+        data-logged-in="0"
+        data-has-account-data="0"
+        data-party-state="0"
+        data-results-state="0"
+        data-gamemode=""
+      >
+        <!-- Left Panel - Profile -->
+        <aside id="leftPanel" class="side-container left-container">
+          <div class="agario-panel agario-side-panel agario-profile-panel">
+            <header class="profile-header clearfix">
+              <img
+                class="agario-profile-picture"
+                src="https://jimboy3100.github.io/banners/profilepic_guest.png"
+                alt="Profile"
+              >
+              <div class="agario-profile-name-container">
+                <div class="agario-profile-name"></div>
+                <span id="coins">💰000</span>
+                <span id="dna">💊000</span>
+                <span id="trophy">🏆000</span>
+              </div>
+              <img
+                class="vanilla-skin-preview"
+                src="https://jimboy3100.github.io/banners/profilepic_guest.png"
+                alt="Skin Preview"
+              >
+            </header>
+
+            <!-- User Stats (hidden by default) -->
+            <section id="user-stats" class="clearfix" hidden>
+              <button id="close-stats" class="close-btn" aria-label="Close">
+                ×
+              </button>
+              <div id="stats-content"></div>
+              <div id="user-info"></div>
+              <dl class="user-details">
+                <dt>Name:</dt>
+                <dd id="UserProfileName1" class="user-name">Guest</dd>
+                <dt>UID:</dt>
+                <dd>
+                  <input id="UserProfileUUID1" class="user-name" readonly>
+                </dd>
+                <dt>Social ID:</dt>
+                <dd><input id="UserProfileUID1" class="user-name" readonly></dd>
+                <dt>Times Used:</dt>
+                <dd id="TimesUsed"></dd>
+              </dl>
+            </section>
+
+            <!-- XP Bar -->
+            <div class="xp-container clearfix">
+              <div class="agario-exp-bar progress">
+                <span class="progress-bar-text"></span>
+                <div class="progress-bar progress-bar-striped"></div>
+              </div>
+              <div class="progress-bar-border"></div>
+              <div class="progress-bar-star"></div>
+            </div>
+
+            <!-- Boost Selection -->
+            <div class="boost-controls">
+              <select
+                id="s-boost"
+                class="form-control"
+                aria-label="Select boost"
+              >
+                <option value="" data-itr="--Select boost--">
+                  --Select boost--
+                </option>
+                <option value="mass_boost_3x_24h">Mass 3x 24h (990)</option>
+                <option value="mass_boost_3x_1h">Mass 3x 1h (490)</option>
+                <option value="mass_boost_2x_24h">Mass 2x 24h (790)</option>
+                <option value="mass_boost_2x_1h">Mass 2x 1h (290)</option>
+                <option value="xp_boost_3x_24h">XP 3x 24h (990)</option>
+                <option value="xp_boost_3x_1h">XP 3x 1h (490)</option>
+                <option value="xp_boost_2x_24h">XP 2x 24h (790)</option>
+                <option value="xp_boost_2x_1h">XP 2x 1h (290)</option>
+              </select>
+              <button id="buy-boost" class="btn btn-primary">BUY</button>
+              <button id="use-boost" class="btn btn-success">USE</button>
+            </div>
+
+            <!-- Active Boosts -->
+            <div id="xp-active"></div>
+            <div id="mass-active"></div>
+            <div id="quest-active"></div>
+
+            <!-- Skins Panel -->
+            <div id="player-skins" class="submenu-panel" hidden></div>
+
+            <!-- Potions -->
+            <div id="potions" class="clearfix" hidden>
+              <div class="potion" data-slot="1">
+                <img
+                  src="https://jimboy3100.github.io/banners/potion_empty.png"
+                  alt="Empty potion"
+                >
+                <span>empty</span>
+              </div>
+              <div class="potion" data-slot="2">
+                <img
+                  src="https://jimboy3100.github.io/banners/potion_empty.png"
+                  alt="Empty potion"
+                >
+                <span>empty</span>
+              </div>
+              <div class="potion" data-slot="3">
+                <img
+                  src="https://jimboy3100.github.io/banners/potion_empty.png"
+                  alt="Empty potion"
+                >
+                <span>empty</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Center Panel - Main Controls -->
+        <main class="center-container">
+          <div id="mainPanel" class="agario-panel">
+            <form id="playForm" novalidate>
+              <div class="form-group">
+                <input
+                  id="nick"
+                  class="form-control"
+                  placeholder="Nick"
+                  autofocus
+                  maxlength="15"
+                >
+              </div>
+
+              <div class="form-group">
+                <select id="gamemode" class="form-control" required>
+                  <option value=":ffa" data-itr="page_gamemode_ffa">FFA</option>
+                  <option
+                    value=":battleroyale"
+                    data-itr="page_gamemode_battle_royale"
+                  >
+                    Battle Royale
+                  </option>
+                  <option value=":teams" data-itr="page_gamemode_teams">
+                    Teams
+                  </option>
+                  <option
+                    value=":experimental"
+                    data-itr="page_gamemode_experimental"
+                  >
+                    Experimental
+                  </option>
+                  <option value=":party" data-itr="page_party">Party</option>
+                </select>
+              </div>
+
+              <div id="locationUnknown" class="form-group">
+                <select id="region" class="form-control" required>
+                  <option value="" data-itr="page_region_select">
+                    Select Region
+                  </option>
+                  <option value="Private">Private</option>
+                  <option
+                    value="US-Atlanta"
+                    data-itr="page_region_north_america"
+                  >
+                    North America
+                  </option>
+                  <option
+                    value="BR-Brazil"
+                    data-itr="page_region_south_america"
+                  >
+                    South America
+                  </option>
+                  <option value="EU-London" data-itr="page_region_europe">
+                    Europe
+                  </option>
+                  <option value="RU-Russia" data-itr="page_region_russia">
+                    Russia
+                  </option>
+                  <option value="TK-Turkey" data-itr="page_region_turkey">
+                    Turkey
+                  </option>
+                  <option value="JP-Tokyo" data-itr="page_region_east_asia">
+                    East Asia
+                  </option>
+                  <option value="CN-China" data-itr="page_region_china">
+                    China
+                  </option>
+                  <option value="SG-Singapore" data-itr="page_region_oceania">
+                    Oceania
+                  </option>
+                </select>
+              </div>
+
+              <div id="agario-main-buttons" class="button-group">
+                <button
+                  type="button"
+                  id="btn-settings"
+                  class="btn btn-info"
+                  aria-label="Settings"
+                >
+                  <i class="glyphicon glyphicon-cog"></i>
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-play btn-primary btn-needs-server"
+                  data-itr="page_play"
+                >
+                  Play
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-play-guest btn-success btn-needs-server"
+                  data-itr="page_play_as_guest"
+                >
+                  Play as Guest
+                </button>
+                <button
+                  type="button"
+                  id="btn-login-play"
+                  class="btn btn-warning btn-needs-server"
+                  data-itr="page_login_and_play"
+                >
+                  Login & Play
+                </button>
+              </div>
+
+              <!-- Social Login -->
+              <div id="socialLoginContainer" hidden>
+                <button
+                  type="button"
+                  id="btn-facebook"
+                  class="btn btn-primary btn-login btn-fb"
+                >
+                  <span class="fa fa-facebook fa-lg"></span>
+                  <span data-itr="page_menu_login_facebook"
+                  >Login with Facebook</span>
+                </button>
+                <button
+                  type="button"
+                  id="btn-google"
+                  class="btn btn-primary btn-login btn-gplus"
+                >
+                  <span class="gplus-icon"></span>
+                  <span data-itr="page_menu_login_google"
+                  >Login with Google</span>
+                </button>
+              </div>
+            </form>
+
+            <!-- Settings Panel -->
+            <div id="settings" hidden>
+              <div id="locationKnown"></div>
+              <div class="settings-actions">
+                <button
+                  class="btn btn-warning btn-spectate btn-needs-server"
+                  data-itr="page_spectate"
+                >
+                  Spectate
+                </button>
+                <button
+                  id="logoutbtn"
+                  class="btn btn-danger btn-logout"
+                  data-itr="page_logout"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- Right Panel - Party -->
+        <aside id="rightPanel" class="side-container right-container">
+          <div class="agario-panel agario-side-panel agario-party">
+            <div class="agario-party-6">
+              <h4 data-itr="page_party">Party</h4>
+              <p class="party-text" data-itr="page_party_join_error"></p>
+              <button
+                id="closePartyAlert"
+                class="btn btn-primary btn-block"
+                data-itr="page_back_button"
+              >
+                Back
+              </button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Game Canvas -->
+    <canvas id="canvas"></canvas>
+
+    <!-- Vendor Scripts -->
+    <script src="https://jimboy3100.github.io/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://jimboy3100.github.io/bootstrap.min.js"></script>
+    <script src="https://jimboy3100.github.io/protobuf.min.js"></script>
+    <script
+      src="https://jimboy3100.github.io/bootstrap-colorpicker.min.js"
+    ></script>
+    <script src="https://jimboy3100.github.io/toastr.min.js"></script>
+    <script src="https://jimboy3100.github.io/switchery.min.js"></script>
+    <script src="https://jimboy3100.github.io/rangeslider.min.js"></script>
+    <script
+      src="https://jimboy3100.github.io/perfect-scrollbar.jquery.min.js"
+    ></script>
+    <script src="https://jimboy3100.github.io/TweenMax.min.js"></script>
+    <script src="https://jimboy3100.github.io/context-menu.min.js"></script>
+    <script
+      src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- App Scripts -->
+    <script src="https://jimboy3100.github.io/buffer.js"></script>
+    <script src="https://jimboy3100.github.io/key-event.js"></script>
+    <script src="https://jimboy3100.github.io/foggy.js"></script>
+    <script src="https://jimboy3100.github.io/LanguagePackEnglish.js"></script>
+    <script
+      src="https://jimboy3100.github.io/LMexpress/LMexpress.sniff.js"
+    ></script>
+    <script
+      src="https://jimboy3100.github.io/LMexpress/LMexpress.sniff2.js"
+    ></script>
+    <script
+      src="https://jimboy3100.github.io/LMexpress/LMexpress.sniff3.js"
+    ></script>
+    <script src="https://jimboy3100.github.io/LMexpress/i18n.js"></script>
+    <script
+      src="https://jimboy3100.github.io/LMexpress/proto.decoder.js"
+    ></script>
+    <script src="https://jimboy3100.github.io/LMexpress/LMexpress.js"></script>
+
+    <!-- Ogario Scripts -->
+    <script src="https://jimboy3100.github.io/ogario/quadtree.js"></script>
+    <script
+      src="https://jimboy3100.github.io/ogario/ogario.v4.master.regionobj.js"
+    ></script>
+    <script
+      src="https://jimboy3100.github.io/ogario/ogario.v4.master.js"
+    ></script>
+    <script src="https://jimboy3100.github.io/ogario/ogario.v4.js"></script>
+    <script
+      src="https://jimboy3100.github.io/ogario/ogario.v4.static.js"
+    ></script>
+    <script
+      src="https://jimboy3100.github.io/ogario/hotkeysCommand.js"
+    ></script>
+    <script src="https://jimboy3100.github.io/ogario/captcha.js"></script>
+    <script src="https://jimboy3100.github.io/ogario/spect.js"></script>
+    <script src="https://jimboy3100.github.io/ogario/lz4.js"></script>
+    <script src="https://jimboy3100.github.io/ogario/autoplay.js"></script>
+    <script src="https://jimboy3100.github.io/ogario/mergetimer.js"></script>
+    <script src="https://jimboy3100.github.io/ogario/anti.js"></script>
+
+    <!-- External APIs -->
+    <script
+      src="https://jimboy3100.github.io/nicks/emoji/DisMojiPicker[1].js"
+    ></script>
+    <script
+      src="https://jimboy3100.github.io/AjaxData/ProLicenceUsersTableJS.js"
+    ></script>
+    <script src="https://deltav4.gitlab.io/standby-server.js"></script>
+    <script
+      src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+      async
+      defer
+    ></script>
+    <script
+      async
+      defer
+      src="https://apis.google.com/js/client:platform.js?onload=gapiAsyncInit"
+    ></script>
+
+    <!-- Initialize -->
+    <script>
+      // Facebook SDK
+      (function (d, s, id) {
+        if (d.getElementById(id)) return;
+        const js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        d.getElementsByTagName(s)[0].parentNode.insertBefore(
+          js,
+          d.getElementsByTagName(s)[0],
+        );
+      })(document, "script", "facebook-jssdk");
+
+      // Event listeners
+      document.getElementById("btn-settings").addEventListener(
+        "click",
+        toggleSettings,
+      );
+      document.getElementById("btn-login-play").addEventListener(
+        "click",
+        toggleSocialLogin,
+      );
+      document.getElementById("btn-facebook").addEventListener(
+        "click",
+        () => master.facebookLogin(),
+      );
+      document.getElementById("logoutbtn").addEventListener(
+        "click",
+        logout,
+      );
+      document.getElementById("region").addEventListener(
+        "change",
+        changeregion,
+      );
+    </script>
+  </body>
+</html>
