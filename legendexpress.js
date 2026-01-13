@@ -432,7 +432,7 @@
             try {
                 const response = await $.ajax({
                     type: "GET",
-                    url: "https://your-server.com/api/access",
+                         url: "https://www.legendmod.ml/AjaxData/accesstoken.html",
                     datatype: "json"
                 });
                 const accesstomod = response[17];
@@ -2989,5 +2989,6 @@
             init(modVersion);
         }, 100);
     }
+
 
 })();
