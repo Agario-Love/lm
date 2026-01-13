@@ -1,6 +1,3 @@
-Here's the converted JavaScript code:
-
-```javascript
 window.OgVer = 3.334;
 window.tempH = 6;
 var consoleMsgLM = "[Client] ";
@@ -212,4 +209,5 @@ function deleteGamemode(temp) {
         }
     });
 }
+
 ```
